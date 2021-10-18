@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script src="./lib/aframe.min.js"></script>
+  <script src="./lib/aframe-ar.js"></script>
+  <script src="./lib/gestures.js"></script>
+  <script>
+    AFRAME.registerComponent('modify-materials', {
+
+    });
+
+    const changeType = (params) => {
+      const formData = new FormData(document.querySelector('#form'));
+      const data = formData.get('type');
+      const list = document.querySelectorAll('a-marker>a-entity');
+      list.forEach(item => {
+        item.attributes.visible.value = data === item.id ? 'true' : 'false';
+      });
+    }
+  </script>
+</head>
+
+<body style="margin : 0px; overflow: hidden;">
+
+  <a-scene embedded arjs vr-mode-ui="enabled: false" gesture-detector>
+    <a-assets>
+      <a-asset-item id="model" src="./lib/demo.obj"></a-asset-item>
+      <a-asset-item id="mtl" src="./lib/2.mtl"></a-asset-item>
+    </a-assets>
+    <a-marker preset="hiro">
+      <a-entity visible="true" id="white" obj-model="obj:#model;" position="0 0 0" scale="0.05 0.05 0.05"
+        rotation="0 0 0" gesture-handler>
+      </a-entity>
+      <a-entity visible="false" id="withMaterial" obj-model="obj:#model;mtl: #mtl" position="0 - 0"
+        scale="0.05 0.05 0.05" modify-materials></a-entity>
+      <a-entity visible="false" id="withScene" position="0 0 0" scale="0.05 0.05 0.05"></a-entity>
+    </a-marker>
+    <a-entity camera></a-entity>
+  </a-scene>
+  <form id="form" style="position: absolute; top: 20px; right: 100px;" onchange="changeType()">
+    <input type="radio" name="type" value="withMaterial" /> 成品<br />
+    <input type="radio" checked name="type" value="white" /> 白膜<br />
+    <input type="radio" name="type" value="withScene" /> 爆炸<br />
+  </form>
+
+</html>

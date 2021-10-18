@@ -1,0 +1,16 @@
+{
+  "name": "ar",
+  "version": "1.0.0",
+  "description": "ar demo",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "koa": "^2.13.3",
+    "koa-cors": "0.0.16",
+    "koa-mount": "^4.0.0",
+    "koa-proxies": "^0.12.1",
+    "koa-static": "^5.0.0"
+  }
+}

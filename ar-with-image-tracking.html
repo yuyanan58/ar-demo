@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <style>
+    .arjs-loader {
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-color: rgba(0, 0, 0, 0.8);
+      z-index: 9999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .arjs-loader div {
+      text-align: center;
+      font-size: 1.25em;
+      color: white;
+    }
+  </style>
+  <script src="./lib/aframe.min.js"></script>
+  <script src="./lib/aframe-ar-nft.js"></script>
+  <script src="./lib/gestures.js"></script>
+  <script>
+    AFRAME.registerComponent('modify-materials', {
+
+    });
+
+    const changeType = (params) => {
+      const formData = new FormData(document.querySelector('#form'));
+      const data = formData.get('type');
+      const list = document.querySelectorAll('a-marker>a-entity');
+      list.forEach(item => {
+        item.attributes.visible.value = data === item.id ? 'true' : 'false';
+      });
+    }
+  </script>
+</head>
+
+<body style="margin : 0px; overflow: hidden;">
+
+  <div class="arjs-loader">
+    <div>Loading, please wait...</div>
+  </div>
+
+  <a-scene vr-mode-ui="enabled: false;" renderer="logarithmicDepthBuffer: true;" embedded
+    arjs="trackingMethod: best; sourceType: webcam;debugUIEnabled: false;" gesture-detector>
+    <a-assets>
+      <a-asset-item id="model" src="./lib/demo.obj"></a-asset-item>
+      <a-asset-item id="mtl" src="./lib/2.mtl"></a-asset-item>
+    </a-assets>
+    <a-nft type="nft" url="./ar-demo/lib/logo/logo" smooth="true" smoothCount="10" smoothTolerance=".01"
+      smoothThreshold="5">
+      <a-entity visible="true" id="white" obj-model="obj:#model;" position="0 0 0" scale="0.05 0.05 0.05"
+        rotation="0 0 0" gesture-handler>
+      </a-entity>
+      <!-- <a-entity visible="false" id="withMaterial" obj-model="obj:#model;mtl: #mtl" position="0 - 0"
+        scale="0.05 0.05 0.05" modify-materials gesture-handler></a-entity>
+      <a-entity visible="false" id="withScene" position="0 0 0" scale="0.05 0.05 0.05" gesture-handler></a-entity>
+      </a-entity> -->
+    </a-nft>
+    <a-entity camera></a-entity>
+  </a-scene>
+
+  <form id="form" style="position: absolute; top: 20px; right: 100px;" onchange="changeType()">
+    <input type="radio" name="type" value="withMaterial" /> 成品<br />
+    <input type="radio" checked name="type" value="white" /> 白膜<br />
+    <input type="radio" name="type" value="withScene" /> 爆炸<br />
+  </form>
+
+</html>
