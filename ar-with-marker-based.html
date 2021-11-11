@@ -2,11 +2,19 @@
 <html>
 
 <head>
-  <script src="./lib/aframe.min.js"></script>
-  <script src="./lib/aframe-ar.js"></script>
-  <script src="./lib/gestures.js"></script>
+  <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+  <script src='https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js'></script>
+  <script src="https://raw.githack.com/yuyanan58/ar-demo/dev/lib/gestures.js"></script>
+  <!-- <script src="./lib/gestures.js"></script> -->
+
   <script>
     AFRAME.registerComponent('modify-materials', {
+      init: function () {
+        this.el.addEventListener('model-loaded', () => {
+          const obj = this.el.getObject3D('mesh');
+          console.log(obj);
+        });
+      }
 
     });
 
@@ -23,25 +31,32 @@
 
 <body style="margin : 0px; overflow: hidden;">
 
-  <a-scene embedded arjs vr-mode-ui="enabled: false" gesture-detector>
+  <a-scene embedded arjs renderer="logarithmicDepthBuffer: true;" vr-mode-ui="enabled: false" gesture-detector
+    id="scene">
     <a-assets>
-      <a-asset-item id="model" src="./lib/demo.obj"></a-asset-item>
-      <a-asset-item id="mtl" src="./lib/2.mtl"></a-asset-item>
+      <a-asset-item id="obj-model" src="https://raw.githubusercontent.com/yuyanan58/ar-demo/dev/lib/demo.obj">
+      </a-asset-item>
+      <a-asset-item id="gltf-model" src="https://raw.githubusercontent.com/yuyanan58/ar-demo/dev/lib/scene.gltf">
+      </a-asset-item>
     </a-assets>
-    <a-marker preset="hiro">
-      <a-entity visible="true" id="white" obj-model="obj:#model;" position="0 0 0" scale="0.05 0.05 0.05"
+    <a-marker type="pattern" url="https://raw.githubusercontent.com/yuyanan58/ar-demo/dev/lib/logo2.patt"
+      preset="custom" raycaster="objects: .clickable" emitevents="true" cursor="fuse: false; rayOrigin: mouse;"
+      id="marker">
+      <a-entity visible="true" id="white" obj-model="obj:#obj-model;" position="0 0 0" scale="0.05 0.05 0.05"
         rotation="0 0 0" gesture-handler>
       </a-entity>
-      <a-entity visible="false" id="withMaterial" obj-model="obj:#model;mtl: #mtl" position="0 - 0"
-        scale="0.05 0.05 0.05" modify-materials></a-entity>
-      <a-entity visible="false" id="withScene" position="0 0 0" scale="0.05 0.05 0.05"></a-entity>
+      <a-entity visible="false" id="withMaterial" gltf-model="#gltf-model" position="0 0 0" scale="0.05 0.05 0.05"
+        rotation="0 0 0" modify-materials gesture-handler></a-entity>
+      <!-- <a-entity visible="false" id="withScene" position="0 0 0" scale="0.05 0.05 0.05" rotation="-90 0 0"
+        gesture-handler></a-entity> -->
     </a-marker>
     <a-entity camera></a-entity>
   </a-scene>
-  <form id="form" style="position: absolute; top: 20px; right: 100px;" onchange="changeType()">
-    <input type="radio" name="type" value="withMaterial" /> 成品<br />
+  <form id="form" style="position: absolute; top: 20px; right: 30px; background: #ccc; padding: 10px;"
+    onchange="changeType()">
     <input type="radio" checked name="type" value="white" /> 白膜<br />
-    <input type="radio" name="type" value="withScene" /> 爆炸<br />
+    <input type="radio" name="type" value="withMaterial" /> 成品<br />
+    <!-- <input type="radio" name="type" value="withScene" /> 爆炸<br /> -->
   </form>
 
 </html>
