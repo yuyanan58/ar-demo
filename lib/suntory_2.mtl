@@ -39,7 +39,7 @@ illum 7
 
 newmtl 材质.5
 Ka 1 1 1
-map_Ka C:\Users\86187\Documents\影棚HDR\DH-386LL.hdr
+map_Ka DH-386LL.hdr
 Kd 0.80000001192093 0.80000001192093 0.80000001192093
 Ks 1 1 1
 Ns 50
