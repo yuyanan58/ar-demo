@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <script src='https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js'></script>
+  <script src="https://raw.githack.com/yuyanan58/ar-demo/dev/lib/gestures.js"></script>
+</head>
+
+<body style="margin : 0px; overflow: hidden;">
+
+  <a-scene embedded arjs="sourceType: webcam; sourceWidth:1280; sourceHeight:960; displayWidth: 1280; displayHeight: 960;" renderer="logarithmicDepthBuffer: true;" vr-mode-ui="enabled: false" gesture-detector
+    id="scene">
+    <a-assets>
+      <!-- <a-asset-item id="obj-model" src="https://raw.githubusercontent.com/yuyanan58/ar-demo/dev/lib/suntory_4.obj"></a-asset-item>
+      <a-asset-item id="obj-mtl" src="https://raw.githubusercontent.com/yuyanan58/ar-demo/dev/lib/suntory_4.mtl"></a-asset-item> -->
+      <a-asset-item id="gltf-model" src="https://raw.githubusercontent.com/yuyanan58/ar-demo/dev/lib/suntory_4.gltf"></a-asset-item>
+    </a-assets>
+    <a-marker type="pattern" url="https://raw.githubusercontent.com/yuyanan58/ar-demo/dev/lib/logo2.patt"
+      preset="custom" raycaster="objects: .clickable" emitevents="true" cursor="fuse: false; rayOrigin: mouse;"
+      id="marker">
+      <!-- <a-entity visible="true" obj-model="obj: #obj-model; mtl: #obj-mtl;" position="0 0 0" scale="0.01 0.01 0.01"
+        rotation="0 0 0" gesture-handler>
+      </a-entity> -->
+      <a-entity visible="true" gltf-model="#gltf-model" position="0 0 0" scale="0.01 0.01 0.01" rotation="0 0 0" gesture-handler></a-entity>
+    </a-marker>
+    <a-entity camera></a-entity>
+  </a-scene>
+
+</html>
